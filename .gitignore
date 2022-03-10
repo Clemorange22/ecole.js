@@ -1,0 +1,17 @@
+#Out dir
+dist
+
+#Yarn files
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+#VSCode settings
+.vscode
+
+#.env file used when running tests
+.env
