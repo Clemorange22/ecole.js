@@ -4,12 +4,14 @@
   "dependencies": {
     "ecoledirecte.js": "^0.30",
     "lodash": "^4.17.21",
-    "pronote-api": "git+https://github.com/EduWireApps/pronote-api"
+    "pronote-api": "git+https://github.com/EduWireApps/pronote-api",
+    "turndown": "^7.1.1"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
     "@types/lodash": "^4.14.178",
     "@types/node": "^17.0.14",
+    "@types/turndown": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "@yarnpkg/sdks": "^2.6.0-rc.8",

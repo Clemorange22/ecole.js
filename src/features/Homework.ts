@@ -1,16 +1,20 @@
 export class Homework {
   id: string;
-  courseID: string;
+  courseID?: string;
   subjectID: string;
-  description: string;
+  /**
+   * @description La decription du devoir à faire au format markdown
+   */
+  description?: string;
   teacher: string;
 
-  givenAtDate: Date;
+  givenAtDate?: Date;
   dueDate: Date;
 
   isDone: boolean;
   isTest: boolean;
   toReturnOnline: boolean;
+  color?: string;
 
   constructor(homeworkOptions: HomeworkOptions) {
     this.id = homeworkOptions.id;
@@ -23,6 +27,7 @@ export class Homework {
     this.isDone = homeworkOptions.isDone;
     this.isTest = homeworkOptions.isTest;
     this.toReturnOnline = homeworkOptions.toReturnOnline;
+    this.color = homeworkOptions.color;
   }
 
   toJSON(): HomeworkOptions {
@@ -37,19 +42,21 @@ export class Homework {
       isDone: this.isDone,
       isTest: this.isTest,
       toReturnOnline: this.toReturnOnline,
+      color: this.color,
     };
   }
 }
 
 export interface HomeworkOptions {
   id: string;
-  courseID: string;
+  courseID?: string;
   subjectID: string;
-  description: string;
+  description?: string;
   teacher: string;
-  givenAtDate: Date;
+  givenAtDate?: Date;
   dueDate: Date;
   isDone: boolean;
   isTest: boolean;
   toReturnOnline: boolean;
+  color?: string;
 }

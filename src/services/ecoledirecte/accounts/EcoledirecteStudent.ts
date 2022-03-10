@@ -1,7 +1,9 @@
+import TurndownService from "turndown";
 import {
   Period as _Period,
   Student as _Student,
   Course as _Course,
+  Assignement as _Homework,
 } from "ecoledirecte.js";
 import { isString } from "lodash";
 
@@ -14,6 +16,7 @@ import {
   Periods,
   Period,
   Class,
+  Homework,
 } from "../../../features";
 import {
   Grades,
@@ -53,6 +56,11 @@ export class EcoledirecteStudent extends BaseEcoledirecteAccount {
     // Timetable
     if (this._account.hasModule("EDT")) {
       this.features.push("TIMETABLE");
+    }
+
+    // Homework
+    if (this._account.hasModule("CAHIER_DE_TEXTES")) {
+      this.features.push("HOMEWORK");
     }
   }
   async getStudentInfo(): Promise<StudentInfo> {
@@ -226,6 +234,35 @@ export class EcoledirecteStudent extends BaseEcoledirecteAccount {
     return new Class({
       id: formatID("ecoledirecte", this._account._raw.profile.classe.code),
       name: this._account._raw.profile.classe.libelle,
+    });
+  }
+
+  async getHomework(dates: {
+    startDate: Date;
+    endDate: Date;
+  }): Promise<Homework[]> {
+    verifyFeature(this.features, "HOMEWORK");
+    const turndownService = new TurndownService();
+    const _homework = await this._account.getHomework({
+      dates: dates ? [dates.startDate, dates.endDate] : undefined,
+      onlyWithWork: true,
+    });
+    return Array.from(_homework, (_homework: _Homework) => {
+      if (!_homework.job) throw new Error("No job found");
+
+      return new Homework({
+        id: formatID("ecoledirecte", _homework.id.toString()),
+        subjectID: formatID("ecoledirecte", _homework.subject.code.toString()),
+        description: turndownService.turndown(_homework.job?.content.html),
+        teacher: _homework.teacher,
+
+        givenAtDate: _homework.job.givenAt,
+        dueDate: _homework.date,
+
+        isDone: _homework.job.done,
+        isTest: _homework.test,
+        toReturnOnline: _homework.job.toReturnOnline,
+      });
     });
   }
 }

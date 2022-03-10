@@ -38,6 +38,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:27.4.0"],
             ["@types/lodash", "npm:4.14.178"],
             ["@types/node", "npm:17.0.14"],
+            ["@types/turndown", "npm:5.0.1"],
             ["@typescript-eslint/eslint-plugin", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:5.10.2"],
             ["@typescript-eslint/parser", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:5.10.2"],
             ["@yarnpkg/sdks", "npm:2.6.0-rc.8"],
@@ -52,6 +53,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pronote-api", "https://github.com/EduWireApps/pronote-api.git#commit=a742a55365ea81494dd6add8975417e1078f704a"],
             ["ts-jest", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:27.1.3"],
             ["ts-node", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:10.5.0"],
+            ["turndown", "npm:7.1.1"],
             ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"]
           ],
           "linkType": "SOFT",
@@ -1586,6 +1588,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-treeify-npm-1.0.0-b5e04e9cd3-1b2397030d.zip/node_modules/@types/treeify/",
           "packageDependencies": [
             ["@types/treeify", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/turndown", [
+        ["npm:5.0.1", {
+          "packageLocation": "./.yarn/cache/@types-turndown-npm-5.0.1-5908880fa8-137c02fb86.zip/node_modules/@types/turndown/",
+          "packageDependencies": [
+            ["@types/turndown", "npm:5.0.1"]
           ],
           "linkType": "HARD",
         }]
@@ -3155,6 +3166,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["domino", [
+        ["npm:2.1.6", {
+          "packageLocation": "./.yarn/cache/domino-npm-2.1.6-b0dc3de857-9b1b6d2661.zip/node_modules/domino/",
+          "packageDependencies": [
+            ["domino", "npm:2.1.6"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["domutils", [
         ["npm:2.8.0", {
           "packageLocation": "./.yarn/cache/domutils-npm-2.8.0-0325139e5c-abf7434315.zip/node_modules/domutils/",
@@ -3184,6 +3204,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:27.4.0"],
             ["@types/lodash", "npm:4.14.178"],
             ["@types/node", "npm:17.0.14"],
+            ["@types/turndown", "npm:5.0.1"],
             ["@typescript-eslint/eslint-plugin", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:5.10.2"],
             ["@typescript-eslint/parser", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:5.10.2"],
             ["@yarnpkg/sdks", "npm:2.6.0-rc.8"],
@@ -3198,6 +3219,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pronote-api", "https://github.com/EduWireApps/pronote-api.git#commit=a742a55365ea81494dd6add8975417e1078f704a"],
             ["ts-jest", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:27.1.3"],
             ["ts-node", "virtual:1f6c802b145eb21c5901aff16b099f812180f2d3fc5f1931bea2423675471635801bb9333688d59bc6dd6124a971ca3571d41cacdb07550e770b94737de45efc#npm:10.5.0"],
+            ["turndown", "npm:7.1.1"],
             ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"]
           ],
           "linkType": "SOFT",
@@ -7296,6 +7318,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/tunnel-npm-0.0.6-b1c0830ea4-c362948df9.zip/node_modules/tunnel/",
           "packageDependencies": [
             ["tunnel", "npm:0.0.6"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["turndown", [
+        ["npm:7.1.1", {
+          "packageLocation": "./.yarn/cache/turndown-npm-7.1.1-e0174f4e55-f2d77632bd.zip/node_modules/turndown/",
+          "packageDependencies": [
+            ["turndown", "npm:7.1.1"],
+            ["domino", "npm:2.1.6"]
           ],
           "linkType": "HARD",
         }]
