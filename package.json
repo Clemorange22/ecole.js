@@ -1,5 +1,6 @@
 {
   "name": "ecole.js",
+  "version": "1.0.0",
   "packageManager": "yarn@3.1.1",
   "dependencies": {
     "ecoledirecte.js": "^0.30",
