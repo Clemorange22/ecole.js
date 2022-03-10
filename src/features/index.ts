@@ -7,3 +7,4 @@ export * from "./Grades";
 export * from "./Timetable";
 export * from "./Class";
 export * from "./Periods";
+export * from "./Homework";
