@@ -1,6 +1,28 @@
 {
   "name": "ecole.js",
+  "description": "A node.js module to connect to the french school systems",
   "version": "1.0.0",
+  "author": {
+    "name": "Clément Boittin",
+    "email": "clement.boittin@protonmail.com"
+  },
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clemorange22/ecole.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Clemorange22/ecole.js/issues"
+  },
+  "homepage": "https://github.com/Clemorange22/ecole.js",
+  "keywords": [
+    "ecole",
+    "school",
+    "school system",
+    "nodejs",
+    "ecoledirecte",
+    "pronote"
+  ],
   "packageManager": "yarn@3.1.1",
   "dependencies": {
     "ecoledirecte.js": "^0.30",
