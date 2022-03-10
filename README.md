@@ -23,7 +23,7 @@ import {
   Session,
   EcoledirecteLoginOptions,
   PronoteLoginOptions,
-} from "../../../src";
+} from "ecole.js";
 
 (async () => {
   const ecoledirecteSession = new Session(
