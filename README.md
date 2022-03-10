@@ -5,3 +5,32 @@
 Services actuellement supportés : 
 * Ecole Directe
 * Pronote
+
+```typescript
+import { Session, EcoledirecteLoginOptions, PronoteLoginOptions } from "ecole.js"
+
+(async () => {
+
+  const ecoledirecteSession = new Session(new EcoledirecteLoginOptions({
+    username: "user",
+    password: "password"
+  }))
+
+  const pronoteSession = new Session(new PronoteLoginOptions({
+    username: "demonstration",
+    password: "pronotevs",
+    url: "https://demo.index-education.net/pronote/"
+  }))
+
+})();
+```
+## Fonctionnalités
+
+|                 | Ecole Directe         | Pronote               |
+| --------------- | --------------------- | --------------------- |
+| Compte Élève    | ✅                     | ✅                     |
+| Classe          | ✅                     | ✅                     |
+| Notes           | ✅                     | ✅                     |
+| Périodes        | ✅                     | ✅                     |
+| Emploi du temps | ✅                     | ✅                     |
+| Devoirs         | Pas encore implémenté | Pas encore implémenté |
