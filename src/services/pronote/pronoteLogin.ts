@@ -1,5 +1,5 @@
-import { login } from "pronote-api";
-import { Session } from "../..";
+import { login, errors as _errors } from "pronote-api";
+import { Session, WrongCredentialsError } from "../..";
 import { PronoteStudent } from "./accounts";
 
 /*
@@ -117,7 +117,12 @@ export class PronoteLoginOptions {
 export async function pronoteLogin(session: Session) {
   const { username, password, url, cas, keepAlive } =
     session.serviceLoginOptions as PronoteLoginOptions;
-  const account = await login(username, password, url, cas);
+  const account = await login(username, password, url, cas).catch((error) => {
+    if (error === _errors.WRONG_CREDENTIALS) {
+      throw new WrongCredentialsError("pronote");
+    }
+    throw error;
+  });
   account.setKeepAlive(keepAlive || false);
 
   switch (account.type.name) {

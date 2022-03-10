@@ -1,9 +1,13 @@
 import { getPronoteTestAccount } from "./getPronoteTestAccount";
-import { Session, PronoteLoginOptions } from "../../../src";
+import {
+  Session,
+  PronoteLoginOptions,
+  WrongCredentialsError,
+} from "../../../src";
 
 const { username, password, url, cas } = getPronoteTestAccount();
 
-test("Login", () => {
+test("Successful login", () => {
   const session = new Session(
     new PronoteLoginOptions({
       username,
@@ -13,4 +17,16 @@ test("Login", () => {
     })
   );
   expect(session.login()).resolves.toBeTruthy();
+});
+
+test("Wrong credentials login error", () => {
+  const session = new Session(
+    new PronoteLoginOptions({
+      username: "wrong",
+      password: "wrong",
+      url,
+      cas,
+    })
+  );
+  expect(session.login()).rejects.toThrow(WrongCredentialsError);
 });

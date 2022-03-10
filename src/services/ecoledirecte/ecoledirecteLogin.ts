@@ -9,7 +9,7 @@ import {
 } from "./accounts";
 
 import { Session as _Session } from "ecoledirecte.js";
-import { Session } from "../..";
+import { Session, WrongCredentialsError } from "../..";
 
 export class EcoledirecteLoginOptions {
   username: string;
@@ -25,7 +25,11 @@ export async function ecoledirecteLogin(
 ): Promise<EcoledirecteAccount> {
   const { username, password } = session.serviceLoginOptions;
   const _session = new _Session(username, password);
-  const account = await _session.login();
+  const account = await _session.login().catch((error) => {
+    if (error.code == 505 || error.message.startsWith("505"))
+      throw new WrongCredentialsError("ecoledirecte");
+    throw error;
+  });
 
   switch (account.type) {
     case "student":
