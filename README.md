@@ -8,14 +8,13 @@ Services actuellement supportés :
 
 ## Fonctionnalités
 
-|                 | Ecole Directe         | Pronote               |
-| --------------- | --------------------- | --------------------- |
-| Compte Élève    | ✅                     | ✅                     |
-| Classe          | ✅                     | ✅                     |
-| Notes           | ✅                     | ✅                     |
-| Périodes        | ✅                     | ✅                     |
-| Emploi du temps | ✅                     | ✅                     |
-| Devoirs         | Pas encore implémenté | Pas encore implémenté |
+|                 | Ecole Directe | Pronote |
+| --------------- | ------------- | ------- |
+| Compte Élève    | ✅             | ✅       |
+| Classe          | ✅             | ✅       |
+| Notes           | ✅             | ✅       |
+| Périodes        | ✅             | ✅       |
+| Emploi du temps | ✅             | ✅       |
 
 
 ```typescript
