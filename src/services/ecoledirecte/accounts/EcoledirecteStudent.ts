@@ -237,14 +237,11 @@ export class EcoledirecteStudent extends BaseEcoledirecteAccount {
     });
   }
 
-  async getHomework(dates: {
-    startDate: Date;
-    endDate: Date;
-  }): Promise<Homework[]> {
+  async getHomework(dates?: { start: Date; end: Date }): Promise<Homework[]> {
     verifyFeature(this.features, "HOMEWORK");
     const turndownService = new TurndownService();
     const _homework = await this._account.getHomework({
-      dates: dates ? [dates.startDate, dates.endDate] : undefined,
+      dates: dates ? [dates.start, dates.end] : undefined,
       onlyWithWork: true,
     });
     return Array.from(_homework, (_homework: _Homework) => {
