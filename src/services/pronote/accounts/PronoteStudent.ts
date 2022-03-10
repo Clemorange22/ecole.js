@@ -1,3 +1,4 @@
+import TurndownService from "turndown";
 import { PronoteBaseAccount } from "../PronoteAccount";
 import {
   Mark as _Grade,
@@ -11,6 +12,7 @@ import {
   FullYearAverages,
   Grade,
   Grades,
+  Homework,
   Period,
   Periods,
   Session,
@@ -28,7 +30,7 @@ export class PronoteStudent extends PronoteBaseAccount {
     (async () => {
       // Detection of enabled features on the student account
 
-      // StudentInfo is always enabled
+      // StudentInfo est toujours activé
       this.features.push("STUDENT_INFO");
       this.features.push("CLASS");
 
@@ -40,6 +42,11 @@ export class PronoteStudent extends PronoteBaseAccount {
       // Timetable
       if (await this._account.timetable()) {
         this.features.push("TIMETABLE");
+      }
+
+      // Homework
+      if (await this._account.homeworks()) {
+        this.features.push("HOMEWORK");
       }
     })();
   }
@@ -197,6 +204,29 @@ export class PronoteStudent extends PronoteBaseAccount {
         isFullYear: _period.type == "year",
         start: _period.from,
         end: _period.to,
+      });
+    });
+  }
+
+  async getHomework(dates?: { start: Date; end: Date }): Promise<Homework[]> {
+    verifyFeature(this.features, "HOMEWORK");
+    const turndownService = new TurndownService();
+    const _homework = await this._account.homeworks(
+      dates ? dates.start : undefined,
+      dates
+        ? dates.end
+        : (await this.getPeriods()).find((_period) => _period.isFullYear)?.end
+    );
+    if (!_homework && _homework !== [])
+      throw new Error("Homework is not enabled");
+    return Array.from(_homework, (_homework) => {
+      return new Homework({
+        id: formatID("pronote", _homework.id),
+        description: turndownService.turndown(_homework.htmlDescription),
+        givenAtDate: _homework.givenAt,
+        dueDate: _homework.for,
+        isDone: _homework.done,
+        color: _homework.color,
       });
     });
   }
