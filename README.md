@@ -6,24 +6,6 @@ Services actuellement supportés :
 * Ecole Directe
 * Pronote
 
-```typescript
-import { Session, EcoledirecteLoginOptions, PronoteLoginOptions } from "ecole.js"
-
-(async () => {
-
-  const ecoledirecteSession = new Session(new EcoledirecteLoginOptions({
-    username: "user",
-    password: "password"
-  }))
-
-  const pronoteSession = new Session(new PronoteLoginOptions({
-    username: "demonstration",
-    password: "pronotevs",
-    url: "https://demo.index-education.net/pronote/"
-  }))
-
-})();
-```
 ## Fonctionnalités
 
 |                 | Ecole Directe         | Pronote               |
@@ -34,3 +16,46 @@ import { Session, EcoledirecteLoginOptions, PronoteLoginOptions } from "ecole.js
 | Périodes        | ✅                     | ✅                     |
 | Emploi du temps | ✅                     | ✅                     |
 | Devoirs         | Pas encore implémenté | Pas encore implémenté |
+
+
+```typescript
+import {
+  Session,
+  EcoledirecteLoginOptions,
+  PronoteLoginOptions,
+} from "../../../src";
+
+(async () => {
+  const ecoledirecteSession = new Session(
+    new EcoledirecteLoginOptions({
+      username: "user",
+      password: "password",
+    })
+  );
+  const ecoledirecteAccount = await ecoledirecteSession.login();
+
+  const pronoteSession = new Session(
+    new PronoteLoginOptions({
+      username: "demonstration",
+      password: "pronotevs",
+      url: "https://demo.index-education.net/pronote/",
+    })
+  );
+
+  const pronoteAccount = await pronoteSession.login();
+
+  const ecoledirecteStudentInfo = await ecoledirecteAccount.getStudentInfo();
+
+  const pronoteClass = await pronoteAccount.getClass();
+
+  const pronoteGrades = await pronoteAccount.getGrades();
+
+  const now = new Date(Date.now());
+  const ecoledirecteTimetable = await ecoledirecteAccount.getTimetable({
+    startDate: now,
+    endDate: new Date(now.setDate(now.getDate() + 1)),
+  });
+
+  const ecoledirectePeriods = await ecoledirecteAccount.getPeriods();
+})();
+```
