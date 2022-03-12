@@ -1,0 +1,28 @@
+on: 
+  workflow_dispatch:
+  release:
+    types: [published]
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: corepack enable
+      - run: yarn build
+      - name: Run tests
+        run: yarn test
+        env:
+          ECOLEDIRECTE_TEST_USERNAME: ${{ secrets.ECOLEDIRECTE_TEST_USERNAME }}
+          ECOLEDIRECTE_TEST_PASSWORD: ${{ secrets.ECOLEDIRECTE_TEST_PASSWORD }}
+
+      - run: yarn publish
+        env: 
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      
