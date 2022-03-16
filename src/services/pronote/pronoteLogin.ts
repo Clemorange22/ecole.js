@@ -117,7 +117,7 @@ export class PronoteLoginOptions {
 export async function pronoteLogin(session: Session) {
   const { username, password, url, cas, keepAlive } =
     session.serviceLoginOptions as PronoteLoginOptions;
-  const account = await login(username, password, url, cas).catch((error) => {
+  const account = await login(url, username, password, cas).catch((error) => {
     if (error === _errors.WRONG_CREDENTIALS) {
       throw new WrongCredentialsError("pronote");
     }

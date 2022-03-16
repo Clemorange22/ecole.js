@@ -5,7 +5,7 @@ import {
   WrongCredentialsError,
 } from "../../../src";
 
-const { username, password, url, cas } = getPronoteTestAccount();
+const { url, username, password, cas } = getPronoteTestAccount();
 
 test("Successful login", () => {
   const session = new Session(

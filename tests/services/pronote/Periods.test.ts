@@ -1,7 +1,7 @@
 import { getPronoteTestAccount } from ".";
 import { Session, PronoteLoginOptions, Period } from "../../../src";
 
-const { username, password, url, cas } = getPronoteTestAccount();
+const { url, username, password, cas } = getPronoteTestAccount();
 
 test("Periods", () => {
   (async () => {
