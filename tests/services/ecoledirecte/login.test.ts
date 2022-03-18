@@ -26,5 +26,7 @@ test("Wrong credentials error", () => {
       password: "wrong",
     })
   );
-  expect(session.login()).rejects.toThrow(WrongCredentialsError);
+  expect(session.login()).rejects.toThrow(
+    new WrongCredentialsError("ecoledirecte")
+  );
 });

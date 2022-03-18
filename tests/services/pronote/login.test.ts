@@ -19,7 +19,7 @@ test("Successful login", () => {
   expect(session.login()).resolves.toBeTruthy();
 });
 
-test("Wrong credentials login error", () => {
+test("Wrong credentials login error", async () => {
   const session = new Session(
     new PronoteLoginOptions({
       username: "wrong",
@@ -28,5 +28,5 @@ test("Wrong credentials login error", () => {
       cas,
     })
   );
-  expect(session.login()).rejects.toThrow(WrongCredentialsError);
+  expect(session.login()).rejects.toThrow(new WrongCredentialsError("pronote"));
 });

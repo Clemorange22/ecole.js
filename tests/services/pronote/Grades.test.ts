@@ -15,8 +15,9 @@ test("Grades", () => {
     );
 
     const account = await session.login();
-    if (!account.hasFeature("GRADES"))
+    if (!account.hasFeature("GRADES")) {
       throw new Error("GRADES feature is not enabled on this account");
+    }
     const grades = await account.getGrades();
     expect(grades).toBeInstanceOf(Grades);
   })();
