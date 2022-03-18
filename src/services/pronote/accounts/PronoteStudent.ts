@@ -37,6 +37,7 @@ export class PronoteStudent extends PronoteBaseAccount {
       // Grades
       if ((await this._account.marks()) && this._account.params?.periods) {
         this.features.push("GRADES");
+        this.features.push("PERIODS");
       }
 
       // Timetable
