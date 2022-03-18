@@ -1,0 +1,12 @@
+.yarn/
+.vscode/
+coverage/
+node_modules/
+.env
+tests/
+src/
+.git/
+.github/
+.pnp.cjs
+.pnp/loader.cjs
+jest.config.json
