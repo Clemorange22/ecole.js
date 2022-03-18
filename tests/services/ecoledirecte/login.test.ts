@@ -19,14 +19,14 @@ test("Successful login", () => {
   };
 });
 
-test("Wrong credentials error", () => {
+test("Wrong credentials error", async () => {
   const session = new Session(
     new EcoledirecteLoginOptions({
       username: "wrong",
       password: "wrong",
     })
   );
-  expect(session.login()).rejects.toThrow(
+  expect(session.login()).rejects.toEqual(
     new WrongCredentialsError("ecoledirecte")
   );
 });

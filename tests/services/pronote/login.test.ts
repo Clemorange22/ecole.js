@@ -28,5 +28,5 @@ test("Wrong credentials login error", async () => {
       cas,
     })
   );
-  expect(session.login()).rejects.toThrow(new WrongCredentialsError("pronote"));
+  expect(session.login()).rejects.toEqual(new WrongCredentialsError("pronote"));
 });
