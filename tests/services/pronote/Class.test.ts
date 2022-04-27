@@ -3,17 +3,15 @@ import { Session, PronoteLoginOptions, Class } from "../../../src";
 
 const { url, username, password, cas } = getPronoteTestAccount();
 
-test("Class", () => {
-  (async () => {
-    const account = await new Session(
-      new PronoteLoginOptions({
-        username,
-        password,
-        url,
-        cas,
-      })
-    ).login();
+test("Class", async () => {
+  const account = await new Session(
+    new PronoteLoginOptions({
+      username,
+      password,
+      url,
+      cas,
+    })
+  ).login();
 
-    expect(await account.getClass()).toBeInstanceOf(Class);
-  })();
+  await expect(account.getClass()).resolves.toBeInstanceOf(Class);
 });

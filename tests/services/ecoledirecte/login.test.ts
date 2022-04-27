@@ -7,16 +7,14 @@ import { getEcoledirecteTestAccount } from "./getEcoledirecteTestAccount";
 
 const { username, password } = getEcoledirecteTestAccount();
 
-test("Successful login", () => {
-  async () => {
-    const session = new Session(
-      new EcoledirecteLoginOptions({
-        username,
-        password,
-      })
-    );
-    expect(await session.login()).toBeTruthy();
-  };
+test("Successful login", async () => {
+  const session = new Session(
+    new EcoledirecteLoginOptions({
+      username,
+      password,
+    })
+  );
+  await expect(session.login()).resolves.toBeTruthy();
 });
 
 test("Wrong credentials error", async () => {
@@ -26,7 +24,7 @@ test("Wrong credentials error", async () => {
       password: "wrong",
     })
   );
-  expect(session.login()).rejects.toEqual(
-    new WrongCredentialsError("ecoledirecte")
+  await expect(session.login()).rejects.toThrow(
+    new WrongCredentialsError("ecoledirecte").message
   );
 });

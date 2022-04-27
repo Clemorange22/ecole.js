@@ -7,7 +7,7 @@ import {
 
 const { url, username, password, cas } = getPronoteTestAccount();
 
-test("Successful login", () => {
+test("Successful login", async () => {
   const session = new Session(
     new PronoteLoginOptions({
       username,
@@ -16,7 +16,7 @@ test("Successful login", () => {
       cas,
     })
   );
-  expect(session.login()).resolves.toBeTruthy();
+  await expect(session.login()).resolves.toBeTruthy();
 });
 
 test("Wrong credentials login error", async () => {
@@ -28,5 +28,7 @@ test("Wrong credentials login error", async () => {
       cas,
     })
   );
-  expect(session.login()).rejects.toEqual(new WrongCredentialsError("pronote"));
+  await expect(session.login()).rejects.toBe(
+    new WrongCredentialsError("pronote")
+  );
 });
