@@ -1,6 +1,6 @@
 import { Period } from "ecoledirecte.js";
 
-export function getCurrentPeriod(_periods: Period[]): Period {
+export function getCurrentPeriod(_periods: Period[]): Period | undefined {
   for (const _period of _periods) {
     const todaysDate = Date.now();
     if (
@@ -10,7 +10,7 @@ export function getCurrentPeriod(_periods: Period[]): Period {
       return _period;
     }
   }
-  throw new Error("Current period not found");
+  return undefined;
 }
 
 export default getCurrentPeriod;

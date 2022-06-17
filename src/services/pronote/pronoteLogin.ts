@@ -127,7 +127,7 @@ export async function pronoteLogin(session: Session) {
 
   switch (account.type.name) {
     case "student":
-      return new PronoteStudent(account, session);
+      return await new PronoteStudent(account, session).init();
     case "parent":
       throw new Error("Account type not implemented");
     case "teacher":

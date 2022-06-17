@@ -4,6 +4,7 @@ import {
   Mark as _Grade,
   Marks as _Grades,
   Lesson as _Course,
+  PronotePeriod as _Period,
   PronoteStudentSession as _PronoteStudentSession,
 } from "pronote-api";
 import {
@@ -21,35 +22,37 @@ import {
   verifyFeature,
 } from "../../..";
 import { calculateSubjectsAverages, findActivePeriod } from "../util";
-import { formatID } from "../../../util";
+import { formatID, asyncForEach } from "../../../util";
 
 export class PronoteStudent extends PronoteBaseAccount {
   declare _account: _PronoteStudentSession;
   constructor(account: _PronoteStudentSession, session: Session) {
     super(account, session);
-    (async () => {
-      // Detection of enabled features on the student account
+  }
 
-      // StudentInfo est toujours activé
-      this.features.push("STUDENT_INFO");
-      this.features.push("CLASS");
+  async init() {
+    // Detection of enabled features on the student account
 
-      // Grades
-      if ((await this._account.marks()) && this._account.params?.periods) {
-        this.features.push("GRADES");
-        this.features.push("PERIODS");
-      }
+    // StudentInfo est toujours activé
+    this.features.push("STUDENT_INFO");
+    this.features.push("CLASS");
 
-      // Timetable
-      if (await this._account.timetable()) {
-        this.features.push("TIMETABLE");
-      }
+    // Grades
+    if ((await this._account.marks()) && this._account.params?.periods) {
+      this.features.push("GRADES");
+      this.features.push("PERIODS");
+    }
 
-      // Homework
-      if (await this._account.homeworks()) {
-        this.features.push("HOMEWORK");
-      }
-    })();
+    // Timetable
+    if (await this._account.timetable()) {
+      this.features.push("TIMETABLE");
+    }
+
+    // Homework
+    if (await this._account.homeworks()) {
+      this.features.push("HOMEWORK");
+    }
+    return this;
   }
 
   async getStudentInfo(): Promise<StudentInfo> {
@@ -70,21 +73,22 @@ export class PronoteStudent extends PronoteBaseAccount {
     //Récupération des notes et des périodes depuis pronote
     const _periods = await this._account.params?.periods;
     if (!_periods) throw new Error("No periods found");
-    const _fullYearPeriod = _periods.find((_period) => _period.type == "year");
+    // @ts-expect-error -- error in library
+    const _fullYearPeriod = _periods.find((_period) => _period.kind == "year");
     if (!_fullYearPeriod) throw new Error("No full year period");
     const _fullYearGrades = await this._account.marks(_fullYearPeriod);
     if (!_fullYearGrades) throw new Error("Grades are not enabled");
     if (!_fullYearGrades?.subjects) throw new Error("No subjects");
     const _periodsExceptedFullYear = _periods.filter(
-      (_period) => !(_period.type == "year")
+      // @ts-expect-error -- error in library
+      (_period) => !(_period.kind == "year")
     );
     const _periodsMarksExceptedFullYear = new Map<string, _Grades>();
-    _periodsExceptedFullYear.forEach(async (_period) => {
+    await asyncForEach(_periodsExceptedFullYear, async (_period: _Period) => {
       const _periodGrades = await this._account.marks(_period);
       if (!_periodGrades) throw new Error("Grades are not enabled");
       _periodsMarksExceptedFullYear.set(_period.id, _periodGrades);
     });
-
     //Transformation des données
     const fullYearSubjectsAverages = calculateSubjectsAverages(
       _fullYearGrades.subjects
@@ -96,21 +100,18 @@ export class PronoteStudent extends PronoteBaseAccount {
       },
       subjects: fullYearSubjectsAverages,
     });
-    const periodAverages = await Array.from(
-      _periodsExceptedFullYear,
-      (_period) => {
-        const _periodGrades = _periodsMarksExceptedFullYear.get(_period.id);
-        if (!_periodGrades?.subjects) throw new Error("No subjects");
-        return {
-          periodName: _period.name,
-          overall: {
-            studentAverage: _periodGrades?.averages.student,
-            classAverage: _periodGrades?.averages.studentClass,
-          },
-          subjects: calculateSubjectsAverages(_periodGrades?.subjects),
-        };
-      }
-    );
+    const periodAverages = Array.from(_periodsExceptedFullYear, (_period) => {
+      const _periodGrades = _periodsMarksExceptedFullYear.get(_period.id);
+      if (!_periodGrades?.subjects) throw new Error("No subjects");
+      return {
+        periodName: _period.name,
+        overall: {
+          studentAverage: _periodGrades?.averages.student,
+          classAverage: _periodGrades?.averages.studentClass,
+        },
+        subjects: calculateSubjectsAverages(_periodGrades?.subjects),
+      };
+    });
     const averages = {
       fullYear: fullYearAverages,
       periods: periodAverages,
@@ -201,8 +202,8 @@ export class PronoteStudent extends PronoteBaseAccount {
       return new Period({
         id: formatID("pronote", _period.id),
         name: _period.name,
-
-        isFullYear: _period.type == "year",
+        // @ts-expect-error -- error in library
+        isFullYear: _period.kind == "year",
         start: _period.from,
         end: _period.to,
       });

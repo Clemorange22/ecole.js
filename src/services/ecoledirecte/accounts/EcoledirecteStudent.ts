@@ -171,7 +171,7 @@ export class EcoledirecteStudent extends BaseEcoledirecteAccount {
     const averages = {
       fullYear: fullYearAverages,
       periods: periodAverages,
-      activePeriod: _currentPeriod.name,
+      activePeriod: _currentPeriod ? _currentPeriod.name : undefined,
     };
     return new Grades(grades, averages);
   }
